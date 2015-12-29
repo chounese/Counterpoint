@@ -7,6 +7,7 @@ public class Interval{
 
 	public static final String MAJOR = "M";
 	public static final String MINOR = "m";
+	public static final String PERFECT = "P";
 	public static final String DIMINISHED = "D";
 	public static final String AUGMENTED = "A";
 
@@ -52,14 +53,23 @@ public class Interval{
 	}
 
 	public Note findNote(boolean direction){
+		//Find number of halfSteps to move
+		int halfSteps = intervalToHalfSteps();
+
+		//Direction == true then the cantus firmus is above
+		//Direction == false then the cantus firmus is below
 		if (direction){
 			//Counterpoint is below
-			//Should have higherNote here
+			//higherNote should != null here
 			try{
-				higherNote.getNoteValue();
-				int halfSteps = intervalToHalfSteps();
+				int noteValue = higherNote.getNoteValue();
 			}
 			catch(NullPointerException e){
+				System.out.println("Higher Note is null");
+				e.printStackTrace();
+			}
+			catch(IllegalArgumentException e){
+				System.out.println("Invalid interval " + intervalType+interval);
 				e.printStackTrace();
 			}
 
@@ -71,21 +81,73 @@ public class Interval{
 	}
 
 	public int intervalToHalfSteps() throws IllegalArgumentException{
-		if (intervalType.equals(MAJOR){
-
+		//Reference check http://www.musictheory.net/lessons/31
+		int halfSteps=0;
+		if (intervalType.equals(MAJOR)){
+			if (interval == 2 || interval == 3){
+				halfSteps = (interval-1) * 2;
+				return halfSteps;
+			}
+			else if (interval == 6 || interval == 7){
+				halfSteps = (interval-2) * 2 + 1;
+				return halfSteps;
+			}
 		}
-		else if(intervalType.equals(MINOR)){
-
+		else if (intervalType.equals(MINOR)){
+			if (interval == 2 || interval == 3){
+				halfSteps = (interval-1) * 2 - 1;
+				return halfSteps;
+			}
+			else if (interval == 6 || interval == 7){
+				halfSteps = (interval-2) * 2;
+				return halfSteps;
+			}
 		}
-		else if(intervalType.equals(AUGMENTED)){
-
+		else if (intervalType.equals(AUGMENTED)){
+			if (interval == 1 || interval == 2 || interval == 3){
+				halfSteps = (interval-1) * 2 +1;
+				return halfSteps;
+			}
+			else if (interval == 6 || interval == 7){
+				halfSteps = (interval-1) * 2 + 2;
+				return halfSteps;
+			}
+			else if (interval == 4 || interval == 5){
+				halfSteps = (interval-1) * 2;
+				return halfSteps;
+			}
+			else if (interval == 8){
+				halfSteps = (interval-1) * 2 -1;
+				return halfSteps;
+			}
 		}
-		else if(intervalType.equals(DIMINISHED)){
-
+		else if (intervalType.equals(DIMINISHED)){
+			if (interval == 2 || interval == 3 || interval == 4 || interval == 5){
+				halfSteps = (interval-2) * 2;
+				return halfSteps;
+			}
+			else if (interval == 6 || interval == 7 || interval == 8){
+				halfSteps = (interval-2) * 2 - 1;
+				return halfSteps;
+			}
 		}
-		else{
-			throw new IllegalArgumentException("Illegal Interval");
+		else if (intervalType.equals(PERFECT)){
+			if (interval == 1){
+				halfSteps = 0;
+				return halfSteps;
+			}
+			else if (interval == 4 || interval == 5){
+				halfSteps = (interval-1) * 2 - 1;
+				return halfSteps;
+			}
+			else if (interval == 8){
+				halfSteps = 12;
+				return halfSteps;
+			}
 		}
+		//If code falls through if/elses then it must be illegal
+		throw new IllegalArgumentException("Illegal Interval");
+		
 	}
 
 
