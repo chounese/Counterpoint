@@ -2,6 +2,7 @@ public class Note{
 
 	private int octave;
 	/*
+	noteValue is the #of halfSteps + (12 * octave)
 	*C=1, C#=2, D=3, D#=4, E=5, F=6, F#=7, G=8, G#=9, A=10, A#=11, B=12
 	*/
 	private int noteValue;
@@ -21,17 +22,19 @@ public class Note{
 	public Note(){
 	}
 
-	//2 Args constuctor 1st species counterpoint
-	public Note(int o, int n){
+	//3 Args constuctor 1st species counterpoint
+	public Note(int o, int n, String name){
 		octave = o;
 		noteValue = n;
+		noteName = name;
 		length = WHOLE_LENGTH;
 	}
 
-	//3 Args constructor
-	public Note(int o, int n, int l){
+	//4 Args constructor
+	public Note(int o, int n, String name, int l){
 		octave = o;
 		noteValue = n;
+		noteName = name;
 		length = l;
 	}
 

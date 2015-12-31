@@ -28,34 +28,53 @@ public class Counterpoint{
 
 
 	public Note findNote(Interval i){
-		//Find number of halfSteps to move
-		int halfSteps = intervalToHalfSteps(i);
+		try{
+			//Find number of halfSteps to move
+			int halfSteps = intervalToHalfSteps(i);
 
-		//Direction == true then the cantus firmus is above
-		//Direction == false then the cantus firmus is below
-		if (direction){
-			//Counterpoint is below
-			//higherNote should != null here
-			try{
-				int noteValue = i.getHigherNote().getNoteValue();
+			//Direction == true then the cantus firmus is above
+			//Direction == false then the cantus firmus is below
+			if (direction){
+				//Counterpoint is below
+				//higherNote should != null here
+				Note highNote = i.getHigherNote();
+				int noteValue = highNote.getNoteValue();
+				//Need to handle the below case--reverse the interval-->subtract the #of halfsteps
+				int newNoteValue = noteValue - halfSteps;
+				int noteNameIndex = newNoteValue % 12;
+				String noteName = noteArray[noteNameIndex];
+				int octave = newNoteValue / 12;
+				Note lowNote = new Note(octave, newNoteValue, noteName);
+				i.setLowerNote(lowNote);
+				return lowNote;
 
 			}
-			catch(NullPointerException e){
-				System.out.println("Higher Note is null");
-				e.printStackTrace();
+			else{
+				//Counterpoint is above
+				Note lowNote = i.getLowerNote();
+				int noteValue = lowNote.getNoteValue();
+				//Need to handle the above case-->add the #of halfsteps
+				int newNoteValue = noteValue + halfSteps;
+				int noteNameIndex = newNoteValue % 12;
+				String noteName = noteArray[noteNameIndex];
+				int octave = newNoteValue / 12;
+				Note highNote = new Note(octave, newNoteValue, noteName);
+				i.setHigherNote(highNote);
+				return highNote;
 			}
-			catch(IllegalArgumentException e){
-				System.out.println("Invalid interval " + i.getIntervalType()+i.getInterval());
-				e.printStackTrace();
-			}
+		}	
+		catch(NullPointerException e){
+			System.out.println("Interval or Higher Note is null");
+			e.printStackTrace();
 		}
-		else{
-			//Counterpoint is above
+		catch(IllegalArgumentException e){
+			System.out.println("Invalid interval " + i.getIntervalType()+i.getInterval());
+			e.printStackTrace();
 		}
-
+		return null; //@TODO There has to be a better way to do this.
 	}
 
-	public int intervalToHalfSteps(Interval i) throws IllegalArgumentException{
+	public int intervalToHalfSteps(Interval i) throws IllegalArgumentException, NullPointerException{
 		//Reference check http://www.musictheory.net/lessons/31
 		int halfSteps;
 		String intervalType = i.getIntervalType();
