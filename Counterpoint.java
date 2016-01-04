@@ -2,6 +2,9 @@ import java.util.*;
 
 public class Counterpoint{
 	//@TODO make a list for notes and intervals
+	private ArrayList<Note> counterpointNotes = new ArrayList<>();
+	private ArrayList<Interval> intervals = new ArrayList<>();
+	//Unused Hashmap
 	private HashMap<String, Integer> indexer = new HashMap<>();
 	private String[] noteArray = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 	//True then cp is below false then above
@@ -15,9 +18,22 @@ public class Counterpoint{
 		direction = d;
 	}
 
-	public boolean getDirection(){
-		return this.direction;
+	public ArrayList<Note> getCounterpointNotes(){
+		return this.counterpointNotes;
 	}
+
+	public void addNote(Note n){
+		counterpointNotes.add(n);
+	}
+
+	public ArrayList<Interval> getIntervals(){
+		return this.intervals;
+	}
+
+	public void addInterval(Interval i){
+		intervals.add(i);
+	}
+
 
 	public HashMap<String, Integer> getIndexer(){
 		return this.indexer;
@@ -25,6 +41,10 @@ public class Counterpoint{
 
 	public String[] getNoteArray(){
 		return this.noteArray;
+	}
+
+	public boolean getDirection(){
+		return this.direction;
 	}
 
 

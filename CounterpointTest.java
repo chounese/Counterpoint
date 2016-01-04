@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class CounterpointTest{
 	public static void main(String[] args){
 		Counterpoint cp = new Counterpoint(true);
@@ -14,30 +16,11 @@ public class CounterpointTest{
 		Interval m7 = intervalInitHelper(cp, e, Interval.MINOR, 7);
 		Interval ma7 = intervalInitHelper(cp, e, Interval.MAJOR, 7);
 		Interval p8 = intervalInitHelper(cp, e, Interval.PERFECT, 8);
-		cp.findNote(p1);
-		cp.findNote(m2);
-		cp.findNote(ma2);
-		cp.findNote(m3);
-		cp.findNote(ma3);
-		cp.findNote(p4);
-		cp.findNote(p5);
-		cp.findNote(m6);
-		cp.findNote(ma6);
-		cp.findNote(m7);
-		cp.findNote(ma7);
-		cp.findNote(p8);
-		System.out.println(p1);
-		System.out.println(m2);
-		System.out.println(ma2);
-		System.out.println(m3);
-		System.out.println(ma3);
-		System.out.println(p4);
-		System.out.println(p5);
-		System.out.println(m6);
-		System.out.println(ma6);
-		System.out.println(m7);
-		System.out.println(ma7);
-		System.out.println(p8);
+		ArrayList<Interval> intervals = cp.getIntervals();
+		for (int i=0; i<intervals.size(); i++){
+			cp.findNote(intervals.get(i));
+			System.out.println(intervals.get(i));
+		}
 	}
 
 	public static Interval intervalInitHelper(Counterpoint cp, Note note, String intervalType, int interval){
@@ -50,6 +33,7 @@ public class CounterpointTest{
 		}
 		i.setIntervalType(intervalType);
 		i.setInterval(interval);
+		cp.addInterval(i);
 		return i;
 	}
 }
