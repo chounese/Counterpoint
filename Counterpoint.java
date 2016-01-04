@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Counterpoint{
+	//@TODO make a list for notes and intervals
 	private HashMap<String, Integer> indexer = new HashMap<>();
 	private String[] noteArray = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 	//True then cp is below false then above
@@ -41,7 +42,7 @@ public class Counterpoint{
 				int noteValue = highNote.getNoteValue();
 				//Need to handle the below case--reverse the interval-->subtract the #of halfsteps
 				int newNoteValue = noteValue - halfSteps;
-				int noteNameIndex = newNoteValue % 12;
+				int noteNameIndex = (newNoteValue-1) % 12;
 				String noteName = noteArray[noteNameIndex];
 				int octave = newNoteValue / 12;
 				Note lowNote = new Note(octave, newNoteValue, noteName);

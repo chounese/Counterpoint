@@ -71,4 +71,8 @@ public class Note{
 	public int getLength(){
 		return this.length;
 	}
+
+	public String toString(){
+		return noteName + (" Octave is " + octave) + (" value is " + noteValue) + (" length is " + length);
+	}
 }

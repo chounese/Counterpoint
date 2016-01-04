@@ -52,4 +52,8 @@ public class Interval{
 		return this.interval;
 	}
 
+	public String toString(){
+		return (intervalType + interval) + ": " + lowerNote + "-->" + higherNote;
+	}
+
 }
